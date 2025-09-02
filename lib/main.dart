@@ -17,7 +17,7 @@ class WeatherApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       theme: ThemeData.dark(),
       title: "Homepage",
-      home: HomepageWeather(teks: "Ini Dunia", color: Colors.blue),
+      home: HomepageWeather(teks: "Homepage", color: Colors.blue),
     );
   }
 }
