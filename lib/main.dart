@@ -18,7 +18,7 @@ class WeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       locale: DevicePreview.locale(context),
-      theme: ThemeData.dark(),
+      theme: ThemeData.light(),
       title: "Homepage",
       home: HomepageWeather(teks: "Homepage", color: Colors.blue),
     );
