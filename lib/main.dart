@@ -36,7 +36,19 @@ class HomepageWeather extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("City", style: TextStyle(fontFamily: 'Poppins')),
+        title: Column(
+          children: [
+            Text("City", style: TextStyle(fontFamily: 'Poppins')),
+            Text(
+              "12.00",
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
