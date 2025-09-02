@@ -4,6 +4,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
 void main() {
   runApp(
@@ -83,7 +84,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
   }
 
   WeatherClass? data;
-
+  String weatherDescription = '';
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
@@ -91,11 +92,11 @@ class _WeatherAppBar extends State<WeatherAppBar> {
       ),
     );
     if (response.statusCode == 200) {
+      final datas = json.decode(response.body);
+      final weatherData = WeatherClass.fromJson(datas);
       setState(() {
-        final datas = json.decode(response.body);
-        final weatherData = WeatherClass.fromJson(datas);
         data = weatherData;
-        print(data);
+        weatherDescription = classification(data);
       });
     }
   }
@@ -181,7 +182,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                       ],
                     ),
                   ),
-                  Text(data?.hourly.weatherCode[0].toString() ?? "N/A"),
+                  Text(weatherDescription ?? "N/A"),
                 ],
               ),
             ],
@@ -189,5 +190,19 @@ class _WeatherAppBar extends State<WeatherAppBar> {
         ),
       ),
     );
+  }
+}
+
+classification(WeatherClass? data) {
+  switch (data?.hourly.weatherCode[0]) {
+    case 61:
+      return "Clear";
+    case 1:
+      return "Partly Cloudy";
+    case 2:
+      return "Overcast";
+      break;
+    default:
+      return "Unknown";
   }
 }
