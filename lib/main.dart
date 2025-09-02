@@ -153,7 +153,9 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                     height: 140,
                   ),
                   Text(
-                    data!.hourly.temperature2m[0].toStringAsFixed(0),
+                    data != null
+                        ? data!.hourly.temperature2m[0].toStringAsFixed(0)
+                        : "N/A",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 100,
