@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:apps/data/models/weather_class.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +60,7 @@ class WeatherAppBar extends StatefulWidget {
 }
 
 class _WeatherAppBar extends State<WeatherAppBar> {
-  String data = '';
+  WeatherClass? data;
 
   Future<void> fetchData() async {
     final response = await http.get(
@@ -68,7 +70,9 @@ class _WeatherAppBar extends State<WeatherAppBar> {
     );
     if (response.statusCode == 200) {
       setState(() {
-        data = response.body;
+        final datas = json.decode(response.body);
+        final weatherData = WeatherClass.fromJson(datas);
+        data = weatherData;
       });
     }
   }
@@ -152,7 +156,6 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                         onPressed: fetchData,
                         label: const Text("Refresh"),
                       ),
-                      Text(data),
                     ],
                   ),
 
@@ -168,8 +171,9 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                 width: 200,
                 height: 200,
               ),
+
               Text(
-                "21",
+                data!.hourly.temperature2m[0].toStringAsFixed(0),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 100,
