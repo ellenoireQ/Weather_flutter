@@ -99,21 +99,41 @@ class WeatherAppBar extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      IconButton(
-                        onPressed: () => {},
-                        icon: Icon(Icons.location_on),
-                        color: Colors.white,
-                        iconSize: 25,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () => {},
+                            icon: Icon(Icons.location_on),
+                            color: Colors.white,
+                            iconSize: 25,
+                          ),
+                          Text(
+                            "Tuban",
+                            style: TextStyle(color: Colors.white, fontSize: 17),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "Tuban",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+
+                      ElevatedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Colors.white,
+                          ),
+                          foregroundColor: MaterialStateProperty.all(
+                            Colors.black,
+                          ),
+                        ),
+                        icon: Icon(Icons.refresh),
+                        onPressed: () => {},
+                        label: const Text("Refresh"),
                       ),
                     ],
                   ),
+
                   IconButton(
                     onPressed: () => {},
                     icon: Icon(Icons.more_vert),
