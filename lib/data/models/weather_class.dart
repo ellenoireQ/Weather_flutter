@@ -8,7 +8,6 @@ class WeatherClass {
   final double elevation;
   final HourlyUnits hourlyUnits;
   final Hourly hourly;
-  final List<String> weatherCode;
 
   WeatherClass({
     required this.latitude,
@@ -20,7 +19,6 @@ class WeatherClass {
     required this.elevation,
     required this.hourlyUnits,
     required this.hourly,
-    required this.weatherCode,
   });
 
   factory WeatherClass.fromJson(Map<String, dynamic> json) {
@@ -34,7 +32,6 @@ class WeatherClass {
       elevation: json['elevation'].toDouble(),
       hourlyUnits: HourlyUnits.fromJson(json['hourly_units']),
       hourly: Hourly.fromJson(json['hourly']),
-      weatherCode: List<String>.from(json['weather_code']),
     );
   }
 
@@ -74,8 +71,13 @@ class HourlyUnits {
 class Hourly {
   final List<String> time;
   final List<double> temperature2m;
+  final List<int> weatherCode;
 
-  Hourly({required this.time, required this.temperature2m});
+  Hourly({
+    required this.time,
+    required this.temperature2m,
+    required this.weatherCode,
+  });
 
   factory Hourly.fromJson(Map<String, dynamic> json) {
     return Hourly(
@@ -83,10 +85,15 @@ class Hourly {
       temperature2m: List<double>.from(
         json['temperature_2m'].map((x) => x.toDouble()),
       ),
+      weatherCode: List<int>.from(json['weather_code']),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'time': time, 'temperature_2m': temperature2m};
+    return {
+      'time': time,
+      'temperature_2m': temperature2m,
+      'weather_code': weatherCode,
+    };
   }
 }

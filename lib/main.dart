@@ -76,6 +76,12 @@ class WeatherAppBar extends StatefulWidget {
 }
 
 class _WeatherAppBar extends State<WeatherAppBar> {
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   WeatherClass? data;
 
   Future<void> fetchData() async {
@@ -89,6 +95,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
         final datas = json.decode(response.body);
         final weatherData = WeatherClass.fromJson(datas);
         data = weatherData;
+        print(data);
       });
     }
   }
@@ -174,7 +181,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                       ],
                     ),
                   ),
-                  Text(data?.weatherCode[0].toString() ?? "N/A"),
+                  Text(data?.hourly.weatherCode[0].toString() ?? "N/A"),
                 ],
               ),
             ],
