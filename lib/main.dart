@@ -119,39 +119,62 @@ class _WeatherAppBar extends State<WeatherAppBar> {
             ],
           ),
 
-          child: Column(
+          child: Stack(
+            clipBehavior: Clip.none,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [SizedBox(), SizedBox()],
-              ),
-              Image.asset(
-                'assets/forecast/cloudyDay.png',
-                width: 140,
-                height: 140,
-              ),
-
-              Text(
-                data!.hourly.temperature2m[0].toStringAsFixed(0),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 100,
-                  fontFamily: "Poppins",
-                  shadows: [
-                    Shadow(
-                      blurRadius: 6,
-                      color: Colors.lightBlueAccent,
-                      offset: Offset(0, 0),
+              Positioned(
+                top: -20, // posisi melayang ke atas
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(20),
+                      elevation: 8,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      shadowColor: Colors.black45,
                     ),
-                    Shadow(
-                      blurRadius: 40,
-                      color: Colors.white.withOpacity(0.5),
-                      offset: Offset(0, 0),
-                    ),
-                  ],
+                    onPressed: () {},
+                    child: Text("Sunday, 2 Sep 2025"),
+                  ),
                 ),
               ),
-              Text("Cloudy"),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [SizedBox(), SizedBox()],
+                  ),
+                  SizedBox(height: 20),
+                  Image.asset(
+                    'assets/forecast/cloudyDay.png',
+                    width: 140,
+                    height: 140,
+                  ),
+                  Text(
+                    data!.hourly.temperature2m[0].toStringAsFixed(0),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 100,
+                      fontFamily: "Poppins",
+                      shadows: [
+                        Shadow(
+                          blurRadius: 6,
+                          color: Colors.lightBlueAccent,
+                          offset: Offset(0, 0),
+                        ),
+                        Shadow(
+                          blurRadius: 40,
+                          color: Colors.white.withOpacity(0.5),
+                          offset: Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text("Cloudy"),
+                ],
+              ),
             ],
           ),
         ),
