@@ -34,6 +34,10 @@ class HomepageWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("City", style: TextStyle(fontFamily: 'Poppins')),
+      ),
       body: Column(
         children: [
           WeatherAppBar(),
@@ -82,14 +86,14 @@ class _WeatherAppBar extends State<WeatherAppBar> {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.only(top: 4),
+        padding: const EdgeInsets.all(30),
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
+              begin: Alignment.topLeft,
               end: Alignment.bottomCenter,
-              colors: [Colors.lightBlueAccent, Colors.blueAccent],
+              colors: [Colors.blue, Colors.lightBlueAccent],
               stops: [0.5, 1],
             ),
             borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -107,69 +111,12 @@ class _WeatherAppBar extends State<WeatherAppBar> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton.outlined(
-                    constraints: BoxConstraints(
-                      minHeight: 10.0,
-                      minWidth: 10.0,
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Colors.white, width: 0.5),
-                    ),
-                    onPressed: () => {},
-                    icon: Image.asset(
-                      'assets/bottom_drawer_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png',
-                      width: 17,
-                      height: 17,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () => {},
-                            icon: Icon(Icons.location_on),
-                            color: Colors.white,
-                            iconSize: 25,
-                          ),
-                          Text(
-                            "Tuban",
-                            style: TextStyle(color: Colors.white, fontSize: 17),
-                          ),
-                        ],
-                      ),
-
-                      ElevatedButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            Colors.white,
-                          ),
-                          foregroundColor: MaterialStateProperty.all(
-                            Colors.black,
-                          ),
-                        ),
-                        icon: Icon(Icons.refresh),
-                        onPressed: fetchData,
-                        label: const Text("Refresh"),
-                      ),
-                    ],
-                  ),
-
-                  IconButton(
-                    onPressed: () => {},
-                    icon: Icon(Icons.more_vert),
-                    color: Colors.white,
-                  ),
-                ],
+                children: [SizedBox(), SizedBox()],
               ),
               Image.asset(
                 'assets/forecast/cloudyDay.png',
-                width: 200,
-                height: 200,
+                width: 140,
+                height: 140,
               ),
 
               Text(
@@ -192,10 +139,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                   ],
                 ),
               ),
-              Text(
-                "Cloudy",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+              Text("Cloudy"),
             ],
           ),
         ),
