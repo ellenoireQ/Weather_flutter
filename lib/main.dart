@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(
@@ -57,6 +58,21 @@ class WeatherAppBar extends StatefulWidget {
 }
 
 class _WeatherAppBar extends State<WeatherAppBar> {
+  String data = '';
+
+  Future<void> fetchData() async {
+    final response = await http.get(
+      Uri.parse(
+        'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m',
+      ),
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        data = response.body;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -133,9 +149,10 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                           ),
                         ),
                         icon: Icon(Icons.refresh),
-                        onPressed: () => {},
+                        onPressed: fetchData,
                         label: const Text("Refresh"),
                       ),
+                      Text(data),
                     ],
                   ),
 
