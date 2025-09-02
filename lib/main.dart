@@ -81,7 +81,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
-        'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m',
+        'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,weather_code',
       ),
     );
     if (response.statusCode == 200) {
@@ -174,7 +174,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                       ],
                     ),
                   ),
-                  Text("Cloudy"),
+                  Text(data?.weatherCode[0].toString() ?? "N/A"),
                 ],
               ),
             ],
