@@ -51,7 +51,12 @@ class HomepageWeather extends StatelessWidget {
   }
 }
 
-class WeatherAppBar extends StatelessWidget {
+class WeatherAppBar extends StatefulWidget {
+  @override
+  State<WeatherAppBar> createState() => _WeatherAppBar();
+}
+
+class _WeatherAppBar extends State<WeatherAppBar> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
