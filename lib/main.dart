@@ -48,8 +48,9 @@ class _HomepageWeather extends State<HomepageWeather> {
   String addreess = '';
   String apiKey = dotenv.env['OPENCAGE_API_KEY'] ?? "";
   Future<void> getAddress() async {
-    setState(() async {
-      addreess = await getAddressFromCoordinates(52.52, 13.41, apiKey);
+    final result = await getAddressFromCoordinates(52.52, 13.41, apiKey);
+    setState(() {
+      addreess = result;
     });
   }
 
