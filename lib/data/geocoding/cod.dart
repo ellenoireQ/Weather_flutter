@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 Future<String> getAddressFromCoordinates(
   double latitude,
   double longitude,
+  String apiKey,
 ) async {
-  final apiKey = '';
   final url =
       'https://api.opencagedata.com/geocode/v1/json?q=$latitude+$longitude&key=$apiKey';
 

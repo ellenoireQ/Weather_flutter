@@ -4,10 +4,13 @@ import 'package:apps/data/models/weather_class.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   runApp(
     DevicePreview(enabled: !kReleaseMode, builder: (context) => WeatherApp()),
   );
@@ -43,9 +46,10 @@ class _HomepageWeather extends State<HomepageWeather> {
   }
 
   String addreess = '';
+  String apiKey = dotenv.env['OPENCAGE_API_KEY'] ?? "";
   Future<void> getAddress() async {
     setState(() async {
-      addreess = await getAddressFromCoordinates(52.52, 13.41);
+      addreess = await getAddressFromCoordinates(52.52, 13.41, apiKey);
     });
   }
 
