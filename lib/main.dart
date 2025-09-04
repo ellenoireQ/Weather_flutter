@@ -108,8 +108,8 @@ class _WeatherAppBar extends State<WeatherAppBar> {
   }
 
   WeatherClass? data;
-  String weatherDescription = '';
-  String address = '';
+  String? weatherDescription;
+  String? address = '';
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
