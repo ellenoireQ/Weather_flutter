@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:apps/data/geocoding/cod.dart';
 import 'package:apps/data/models/weather_class.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
@@ -26,11 +27,27 @@ class WeatherApp extends StatelessWidget {
   }
 }
 
-class HomepageWeather extends StatelessWidget {
+class HomepageWeather extends StatefulWidget {
+  const HomepageWeather({super.key, required this.teks, required this.color});
+
   final String teks;
   final Color color;
+  @override
+  State<HomepageWeather> createState() => _HomepageWeather();
+}
 
-  const HomepageWeather({super.key, required this.teks, required this.color});
+class _HomepageWeather extends State<HomepageWeather> {
+  void initState() {
+    super.initState();
+    getAddress();
+  }
+
+  String addreess = '';
+  Future<void> getAddress() async {
+    setState(() async {
+      addreess = await getAddressFromCoordinates(52.52, 13.41);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +56,7 @@ class HomepageWeather extends StatelessWidget {
         centerTitle: true,
         title: Column(
           children: [
-            Text("City", style: TextStyle(fontFamily: 'Poppins')),
+            Text(addreess, style: TextStyle(fontFamily: 'Poppins')),
             Text(
               "12.00",
               style: TextStyle(
@@ -59,7 +76,7 @@ class HomepageWeather extends StatelessWidget {
               width: double.infinity,
               child: Center(
                 child: Text(
-                  teks,
+                  widget.teks,
                   style: TextStyle(fontSize: 30, color: Colors.white),
                 ),
               ),
@@ -87,6 +104,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
 
   WeatherClass? data;
   String weatherDescription = '';
+  String address = '';
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
@@ -185,6 +203,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                     ),
                   ),
                   Text(weatherDescription ?? "N/A"),
+                  Text(address ?? "N/A"),
                 ],
               ),
             ],
