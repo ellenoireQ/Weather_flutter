@@ -72,11 +72,12 @@ class _HomepageWeather extends State<HomepageWeather> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          WeatherAppBar(),
-          Expanded(
-            child: SizedBox(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            WeatherAppBar(),
+            SizedBox(
+              height: 200,
               width: double.infinity,
               child: Center(
                 child: Text(
@@ -85,8 +86,8 @@ class _HomepageWeather extends State<HomepageWeather> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -276,9 +277,29 @@ class _WeatherAppBar extends State<WeatherAppBar> {
         //
         // List forecast
         //
-        Column(children: [
-            
-          ],
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: List.generate(4, (index) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    "Day $index",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              );
+            }),
+          ),
         ),
       ],
     );
