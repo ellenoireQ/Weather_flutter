@@ -72,6 +72,8 @@ class HomepageWeather extends StatelessWidget {
 }
 
 class WeatherAppBar extends StatefulWidget {
+  const WeatherAppBar({super.key});
+
   @override
   State<WeatherAppBar> createState() => _WeatherAppBar();
 }
@@ -193,16 +195,24 @@ class _WeatherAppBar extends State<WeatherAppBar> {
   }
 }
 
-classification(WeatherClass? data) {
-  switch (data?.hourly.weatherCode[0]) {
-    case 61:
-      return "Clear";
-    case 1:
-      return "Partly Cloudy";
-    case 2:
-      return "Overcast";
-      break;
-    default:
-      return "Unknown";
-  }
+String classification(WeatherClass? data) {
+  if (data == null || data.hourly.weatherCode.isEmpty) return "unknown";
+
+  int code = data.hourly.weatherCode[0];
+
+  if (code == 0) return "Clear";
+  if ([1, 2, 3].contains(code)) return "Cloudy";
+  if ([45, 48].contains(code)) return "Fog";
+  if ([51, 53, 55].contains(code)) return "Drizzle";
+  if ([56, 57].contains(code)) return "Freezing drizzle";
+  if ([61, 63, 65].contains(code)) return "Rain";
+  if ([66, 67].contains(code)) return "Freezing rain";
+  if ([71, 73, 75].contains(code)) return "Snow";
+  if (code == 77) return "Snow grains";
+  if ([80, 81, 82].contains(code)) return "Rain showers";
+  if ([85, 86].contains(code)) return "Snow showers";
+  if (code == 95) return "Thunderstorm";
+  if ([96, 99].contains(code)) return "Thunderstorm with hail";
+
+  return "unknown";
 }
