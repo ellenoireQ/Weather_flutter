@@ -110,6 +110,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
   String? weatherDescription;
   String? address = '';
   String resultWeather = '';
+
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
@@ -159,93 +160,120 @@ class _WeatherAppBar extends State<WeatherAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Container(
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomCenter,
-              colors: [Colors.blue, Colors.lightBlueAccent],
-              stops: [0.5, 1],
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.blue.withOpacity(0.6),
-                blurRadius: 20,
-                spreadRadius: 1,
-                offset: Offset(0, 0),
+    final TextEditingController _searchController = TextEditingController();
+    return Column(
+      children: [
+        SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.blue, Colors.lightBlueAccent],
+                  stops: [0.5, 1],
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.6),
+                    blurRadius: 20,
+                    spreadRadius: 1,
+                    offset: Offset(0, 0),
+                  ),
+                ],
               ),
-            ],
-          ),
 
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                top: -20, // posisi melayang ke atas
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(20),
-                      elevation: 8,
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
-                      shadowColor: Colors.black45,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    top: -20, // posisi melayang ke atas
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(20),
+                          elevation: 8,
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          shadowColor: Colors.black45,
+                        ),
+                        onPressed: () {},
+                        child: Text("Sunday, 2 Sep 2025"),
+                      ),
                     ),
-                    onPressed: () {},
-                    child: Text("Sunday, 2 Sep 2025"),
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [SizedBox(), SizedBox()],
+                      ),
+                      SizedBox(height: 20),
+                      Image.asset(
+                        'assets/forecast/$resultWeather',
+                        width: 140,
+                        height: 140,
+                      ),
+                      Text(
+                        data != null
+                            ? data!.hourly.temperature2m[0].toStringAsFixed(0)
+                            : "N/A",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 100,
+                          fontFamily: "Poppins",
+                          shadows: [
+                            Shadow(
+                              blurRadius: 6,
+                              color: Colors.lightBlueAccent,
+                              offset: Offset(0, 0),
+                            ),
+                            Shadow(
+                              blurRadius: 40,
+                              color: Colors.white.withOpacity(0.5),
+                              offset: Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(weatherDescription ?? "N/A"),
+                      Text(address ?? "N/A"),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 22.0, right: 22.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () => _searchController.clear(),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
                 ),
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [SizedBox(), SizedBox()],
-                  ),
-                  SizedBox(height: 20),
-                  Image.asset(
-                    'assets/forecast/$resultWeather',
-                    width: 140,
-                    height: 140,
-                  ),
-                  Text(
-                    data != null
-                        ? data!.hourly.temperature2m[0].toStringAsFixed(0)
-                        : "N/A",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 100,
-                      fontFamily: "Poppins",
-                      shadows: [
-                        Shadow(
-                          blurRadius: 6,
-                          color: Colors.lightBlueAccent,
-                          offset: Offset(0, 0),
-                        ),
-                        Shadow(
-                          blurRadius: 40,
-                          color: Colors.white.withOpacity(0.5),
-                          offset: Offset(0, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Text(weatherDescription ?? "N/A"),
-                  Text(address ?? "N/A"),
-                ],
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
