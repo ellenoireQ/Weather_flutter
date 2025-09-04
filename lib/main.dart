@@ -109,6 +109,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
   WeatherClass? data;
   String? weatherDescription;
   String? address = '';
+  String resultWeather = '';
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse(
@@ -122,6 +123,37 @@ class _WeatherAppBar extends State<WeatherAppBar> {
         data = weatherData;
         weatherDescription = classification(data);
       });
+      spesification();
+    }
+  }
+
+  Future<void> spesification() async {
+    //
+    // ASSETS THAT I GOT FROM:
+    // https://www.figma.com/community/file/1475148761806819630
+    // https://www.figma.com/community/file/1213472613903351253
+    //
+
+    switch (weatherDescription) {
+      case 'Clear':
+        resultWeather = "clear.png";
+        break;
+      case 'Cloudy':
+        resultWeather = "cloudyDay.png";
+        break;
+      case 'Fog':
+        resultWeather = "fog.png";
+        break;
+      case 'Drizzle':
+        resultWeather = 'drizzle.png';
+        break;
+      case 'Freezing drizzle':
+        resultWeather = 'drizzleSnow.png';
+        break;
+      case 'Rain':
+        resultWeather = 'rain.png';
+        break;
+      // not yet implemented now....
     }
   }
 
@@ -180,7 +212,7 @@ class _WeatherAppBar extends State<WeatherAppBar> {
                   ),
                   SizedBox(height: 20),
                   Image.asset(
-                    'assets/forecast/cloudyDay.png',
+                    'assets/forecast/$resultWeather',
                     width: 140,
                     height: 140,
                   ),
